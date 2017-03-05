@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Awesome Movies</string>
+    <string name="error_message">Something went wrong !!</string>
+    <string name="title_experimental_text">Finding Dory</string>
+    <string name="date_expermintal_text">16 June, 2016</string>
+    <string name="rating_expermintal_text">9/10</string>
+    <string name="overview_text">Overview</string>
+    <string name="movie_poster_description">Movie Poster</string>
+    <string name="bdImage_description">Cover Image</string>
+    <string name="add_to_favorites_button_description">Add to favorites</string>
+</resources>
