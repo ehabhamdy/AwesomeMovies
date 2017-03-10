@@ -16,7 +16,7 @@ import com.ehab.awesomemovies.model.MovieDetail;
 public class MainActivity extends AppCompatActivity implements PopularMoviesAdapter.ListItemClickListener{
 
 
-    public static final String EXTRA_MOVIE_DETAILS = "MOVIE_DETIALS";
+    public static final String EXTRA_MOVIE_DETAILS = "movie-details";
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
     private ViewPager mViewPager;
