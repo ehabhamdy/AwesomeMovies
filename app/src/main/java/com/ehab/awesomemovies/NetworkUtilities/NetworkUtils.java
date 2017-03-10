@@ -1,6 +1,7 @@
 package com.ehab.awesomemovies.NetworkUtilities;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.util.Log;
@@ -240,4 +241,20 @@ public final class NetworkUtils {
     }
 
 
+    public static MovieDetail[] getMoviesDetailsFromCursor(Cursor cursor) {
+        MovieDetail[] parsedMovieData = new MovieDetail[cursor.getCount()];
+        int i = 0;
+        if (cursor.moveToFirst()){
+            do{
+                String movieId = cursor.getString(cursor.getColumnIndex("movie_id"));
+                String title = cursor.getString(cursor.getColumnIndex("title"));
+                MovieDetail m = new MovieDetail();
+                m.setId(Integer.valueOf(movieId));
+                m.setTitle(title);
+                parsedMovieData[i++] = m;
+            }while(cursor.moveToNext());
+        }
+        cursor.close();
+        return parsedMovieData;
+    }
 }

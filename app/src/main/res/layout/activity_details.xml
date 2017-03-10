@@ -61,6 +61,7 @@
                         android:paddingTop="35dp">
 
                         <ImageView
+                            android:id="@+id/toggle_favorite"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:layout_alignParentEnd="true"

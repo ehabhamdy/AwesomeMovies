@@ -16,5 +16,11 @@ public interface MoviesColumns {
     String _ID = "_id";
 
     @DataType(DataType.Type.TEXT) @NotNull
+    String MOVIE_ID = "movie_id";
+
+    @DataType(DataType.Type.TEXT) @NotNull
+    String POSTER_PATH = "poster_path";
+
+    @DataType(DataType.Type.TEXT) @NotNull
     String TITLE = "title";
 }

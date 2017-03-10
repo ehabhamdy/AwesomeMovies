@@ -10,13 +10,14 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import com.ehab.awesomemovies.ui.fragments.MoviesFragment;
-import com.ehab.awesomemovies.data.PopularMoviesAdapter;
+import com.ehab.awesomemovies.MoviesOnClickListener;
 import com.ehab.awesomemovies.R;
 import com.ehab.awesomemovies.model.MovieDetail;
+import com.ehab.awesomemovies.ui.fragments.FavoritesFragment;
+import com.ehab.awesomemovies.ui.fragments.MoviesFragment;
 
 
-public class MainActivity extends AppCompatActivity implements PopularMoviesAdapter.ListItemClickListener {
+public class MainActivity extends AppCompatActivity implements MoviesOnClickListener {
 
 
     public static final String EXTRA_MOVIE_DETAILS = "movie-details";
@@ -69,6 +70,8 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
                     return MoviesFragment.newInstance(1);
                 case 1:
                     return MoviesFragment.newInstance(2);
+                case 2:
+                    return FavoritesFragment.newInstance(3);
             }
             return null;
 
@@ -77,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 2;
+            return 3;
         }
 
         @Override
@@ -87,6 +90,8 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
                     return "Popular Movies";
                 case 1:
                     return "Top Rated";
+                case 2:
+                    return "favorites";
             }
             return null;
         }

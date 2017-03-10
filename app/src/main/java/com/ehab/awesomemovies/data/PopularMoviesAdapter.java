@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.ehab.awesomemovies.MoviesOnClickListener;
 import com.ehab.awesomemovies.R;
 import com.ehab.awesomemovies.model.MovieDetail;
 import com.squareup.picasso.Picasso;
@@ -20,11 +21,8 @@ public class PopularMoviesAdapter extends RecyclerView.Adapter<PopularMoviesAdap
 
 
 
-    public interface ListItemClickListener{
-        void onListItemClick(MovieDetail clickedItemIndex);
-    }
 
-    final private ListItemClickListener mOnClickListener;
+    final private MoviesOnClickListener mOnClickListener;
 
     private MovieDetail[] mMovies;
     private Context mContext;
@@ -32,7 +30,7 @@ public class PopularMoviesAdapter extends RecyclerView.Adapter<PopularMoviesAdap
 
     public PopularMoviesAdapter(Context context){
         mContext = context;
-        mOnClickListener = (ListItemClickListener) context;
+        mOnClickListener = (MoviesOnClickListener) context;
     }
 
     @Override

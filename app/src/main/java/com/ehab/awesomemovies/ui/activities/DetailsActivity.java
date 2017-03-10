@@ -1,7 +1,10 @@
 package com.ehab.awesomemovies.ui.activities;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -12,11 +15,14 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ehab.awesomemovies.FetchDetailsTask;
 import com.ehab.awesomemovies.FetchReviewsTask;
 import com.ehab.awesomemovies.FetchTralersTask;
 import com.ehab.awesomemovies.R;
+import com.ehab.awesomemovies.data.FavoritesProvider;
+import com.ehab.awesomemovies.data.MoviesColumns;
 import com.ehab.awesomemovies.data.ReviewsAdapter;
 import com.ehab.awesomemovies.data.TrailersAdapter;
 import com.ehab.awesomemovies.model.MovieDetail;
@@ -49,11 +55,17 @@ public class DetailsActivity extends AppCompatActivity implements TrailersAdapte
     @BindView(R.id.overview_textview)
     TextView overviewTextView;
 
+    private MovieDetail mMDetails;
+
     private TrailersAdapter mTrailersAdapter;
     private RecyclerView mTrailersRecyclerview;
 
     private ReviewsAdapter mReviewsAdapter;
     private RecyclerView mReviewsRecyclerview;
+
+    private ImageView mMakeFavoriteImageView;
+
+    private boolean isFavorite = false;
 
     @Override
 
@@ -65,7 +77,25 @@ public class DetailsActivity extends AppCompatActivity implements TrailersAdapte
         Intent intent = getIntent();
         final int movieId = intent.getIntExtra(MainActivity.EXTRA_MOVIE_DETAILS, 2);
 
-        //title.setText(String.valueOf(movieId));
+        mMakeFavoriteImageView = (ImageView) findViewById(R.id.toggle_favorite);
+
+        new AsyncTask<String, Void, Boolean>(){
+            @Override
+            protected Boolean doInBackground(String... strings) {
+                Cursor c = getContentResolver().query(FavoritesProvider.Movies.withId(movieId),null,null,null,null);
+                int count = c.getCount();
+                if(c.moveToFirst() || count > 0)
+                    return true;
+                else
+                    return false;
+
+            }
+
+            @Override
+            protected void onPostExecute(Boolean aBoolean) {
+                isFavorite = aBoolean;
+            }
+        }.execute();
 
         new FetchDetailsTask() {
             @Override
@@ -78,7 +108,7 @@ public class DetailsActivity extends AppCompatActivity implements TrailersAdapte
                 mLoadingIndicator.setVisibility(View.INVISIBLE);
                 if (movieDetail != null) {
                     showMovieDataView();
-
+                    mMDetails = movieDetail;
                     Picasso.with(getApplicationContext()).load("http://image.tmdb.org/t/p/w500/"+movieDetail.getBackdropPath()).into(bdImageView);
                     Picasso.with(getApplicationContext()).load("http://image.tmdb.org/t/p/w342/"+movieDetail.getPosterPath()).into(posterImageView);
 
@@ -93,6 +123,25 @@ public class DetailsActivity extends AppCompatActivity implements TrailersAdapte
                 }
             }
         }.execute(movieId);
+
+        mMakeFavoriteImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!isFavorite) {
+                    ContentValues cv = new ContentValues();
+                    cv.put(MoviesColumns.MOVIE_ID, movieId);
+                    cv.put(MoviesColumns.POSTER_PATH, mMDetails.getPosterPath());
+                    cv.put(MoviesColumns.TITLE, mMDetails.getTitle());
+                    getContentResolver().insert(FavoritesProvider.Movies.CONTENT_URI, cv);
+                    Toast.makeText(DetailsActivity.this, "Movie Added To Favorites", Toast.LENGTH_SHORT).show();
+                    isFavorite = true;
+                }else{
+                    getContentResolver().delete(FavoritesProvider.Movies.CONTENT_URI, "movie_id = "+ movieId, null );
+                    Toast.makeText(DetailsActivity.this, "Movie Removed From Favorites", Toast.LENGTH_SHORT).show();
+                    isFavorite = false;
+                }
+            }
+        });
 
         mTrailersRecyclerview = (RecyclerView) findViewById(R.id.trailer_recyclerview);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
