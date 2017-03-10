@@ -1,4 +1,4 @@
-package com.ehab.awesomemovies;
+package com.ehab.awesomemovies.data;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.ehab.awesomemovies.R;
 import com.ehab.awesomemovies.model.Trailer;
 import com.squareup.picasso.Picasso;
 

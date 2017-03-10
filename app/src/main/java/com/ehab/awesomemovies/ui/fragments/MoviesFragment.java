@@ -1,4 +1,4 @@
-package com.ehab.awesomemovies;
+package com.ehab.awesomemovies.ui.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,7 +15,10 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.ehab.awesomemovies.NetworkUtilities.NetworkUtils;
+import com.ehab.awesomemovies.data.PopularMoviesAdapter;
+import com.ehab.awesomemovies.R;
 import com.ehab.awesomemovies.model.MovieDetail;
+import com.ehab.awesomemovies.ui.activities.MainActivity;
 import com.google.android.flexbox.AlignItems;
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;

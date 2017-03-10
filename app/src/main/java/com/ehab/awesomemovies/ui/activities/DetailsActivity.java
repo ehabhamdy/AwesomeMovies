@@ -1,10 +1,11 @@
-package com.ehab.awesomemovies;
+package com.ehab.awesomemovies.ui.activities;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,17 +13,22 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.ehab.awesomemovies.FetchDetailsTask;
+import com.ehab.awesomemovies.FetchReviewsTask;
+import com.ehab.awesomemovies.FetchTralersTask;
+import com.ehab.awesomemovies.R;
+import com.ehab.awesomemovies.data.ReviewsAdapter;
+import com.ehab.awesomemovies.data.TrailersAdapter;
 import com.ehab.awesomemovies.model.MovieDetail;
+import com.ehab.awesomemovies.model.Review;
 import com.ehab.awesomemovies.model.Trailer;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.ehab.awesomemovies.MainActivity.EXTRA_MOVIE_DETAILS;
 
-
-public class DetailsActivity extends AppCompatActivity implements TrailersAdapter.ListItemClickListener{
+public class DetailsActivity extends AppCompatActivity implements TrailersAdapter.ListItemClickListener {
 
     @BindView(R.id.movie_title)
     TextView title;
@@ -43,9 +49,11 @@ public class DetailsActivity extends AppCompatActivity implements TrailersAdapte
     @BindView(R.id.overview_textview)
     TextView overviewTextView;
 
-    private TrailersAdapter mAdapter;
+    private TrailersAdapter mTrailersAdapter;
     private RecyclerView mTrailersRecyclerview;
 
+    private ReviewsAdapter mReviewsAdapter;
+    private RecyclerView mReviewsRecyclerview;
 
     @Override
 
@@ -55,7 +63,7 @@ public class DetailsActivity extends AppCompatActivity implements TrailersAdapte
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        final int movieId = intent.getIntExtra(EXTRA_MOVIE_DETAILS, 2);
+        final int movieId = intent.getIntExtra(MainActivity.EXTRA_MOVIE_DETAILS, 2);
 
         //title.setText(String.valueOf(movieId));
 
@@ -91,15 +99,29 @@ public class DetailsActivity extends AppCompatActivity implements TrailersAdapte
         mTrailersRecyclerview.setLayoutManager(gridLayoutManager);
         mTrailersRecyclerview.setHasFixedSize(true);
 
-        mAdapter = new TrailersAdapter(this);
-        mTrailersRecyclerview.setAdapter(mAdapter);
+        mTrailersAdapter = new TrailersAdapter(this);
+        mTrailersRecyclerview.setAdapter(mTrailersAdapter);
 
+        mReviewsRecyclerview = (RecyclerView) findViewById(R.id.reviews_recyclerview);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        mReviewsRecyclerview.setLayoutManager(linearLayoutManager);
+        mReviewsRecyclerview.setHasFixedSize(true);
+
+        mReviewsAdapter = new ReviewsAdapter(this);
+        mReviewsRecyclerview.setAdapter(mReviewsAdapter);
 
 
         new FetchTralersTask(this){
             @Override
             protected void onPostExecute(Trailer[] trailers) {
-                mAdapter.setNewData(trailers);
+                mTrailersAdapter.setNewData(trailers);
+            }
+        }.execute(movieId);
+
+        new FetchReviewsTask(this){
+            @Override
+            protected void onPostExecute(Review[] reviews) {
+                mReviewsAdapter.setNewData(reviews);
             }
         }.execute(movieId);
     }

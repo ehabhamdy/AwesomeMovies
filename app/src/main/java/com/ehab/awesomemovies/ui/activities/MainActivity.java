@@ -1,4 +1,4 @@
-package com.ehab.awesomemovies;
+package com.ehab.awesomemovies.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,10 +10,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import com.ehab.awesomemovies.ui.fragments.MoviesFragment;
+import com.ehab.awesomemovies.data.PopularMoviesAdapter;
+import com.ehab.awesomemovies.R;
 import com.ehab.awesomemovies.model.MovieDetail;
 
 
-public class MainActivity extends AppCompatActivity implements PopularMoviesAdapter.ListItemClickListener{
+public class MainActivity extends AppCompatActivity implements PopularMoviesAdapter.ListItemClickListener {
 
 
     public static final String EXTRA_MOVIE_DETAILS = "movie-details";
