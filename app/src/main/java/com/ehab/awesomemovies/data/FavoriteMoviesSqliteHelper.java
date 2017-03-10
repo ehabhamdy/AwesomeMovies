@@ -10,6 +10,7 @@ import static com.ehab.awesomemovies.data.MoviesContract.MoviesEntry.COLUMN_BACK
 import static com.ehab.awesomemovies.data.MoviesContract.MoviesEntry.COLUMN_GENRE_ID;
 import static com.ehab.awesomemovies.data.MoviesContract.MoviesEntry.COLUMN_MOVIE_ID;
 import static com.ehab.awesomemovies.data.MoviesContract.MoviesEntry.COLUMN_OVERVIEW;
+import static com.ehab.awesomemovies.data.MoviesContract.MoviesEntry.COLUMN_POSTER_PATH;
 import static com.ehab.awesomemovies.data.MoviesContract.MoviesEntry.COLUMN_RELEASE_DATE;
 import static com.ehab.awesomemovies.data.MoviesContract.MoviesEntry.COLUMN_TITLE;
 import static com.ehab.awesomemovies.data.MoviesContract.MoviesEntry.COLUMN_VOTE_AVERAGE;
@@ -35,6 +36,7 @@ public class FavoriteMoviesSqliteHelper extends SQLiteOpenHelper {
         sql.append(COLUMN_MOVIE_ID + " INTEGER, ");
         sql.append(COLUMN_TITLE + " VARCHAR NOT NULL, ");
         sql.append(COLUMN_BACKDROP_PATH + " VARCHAR NOT NULL, ");
+        sql.append(COLUMN_POSTER_PATH + " VARCHAR NOT NULL, ");
         sql.append(COLUMN_ADULT + " INTEGER NOT NULL, ");
         sql.append(COLUMN_RELEASE_DATE + " VARCHAR NOT NULL, ");
         sql.append(COLUMN_VOTE_AVERAGE + " REAL NOT NULL, ");
