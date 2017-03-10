@@ -6,7 +6,8 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.ehab.awesomemovies.BuildConfig;
-import com.ehab.awesomemovies.MainActivity;
+import com.ehab.awesomemovies.model.Review;
+import com.ehab.awesomemovies.ui.activities.MainActivity;
 import com.ehab.awesomemovies.model.MovieDetail;
 import com.ehab.awesomemovies.model.Trailer;
 
@@ -168,6 +169,22 @@ public final class NetworkUtils {
         return parsedTrailerData;
     }
 
+    public static Review[] getReviewsDetailsFromJson(Context mContext, String jsonReviewsResponse) throws JSONException {
+        JSONObject reviewsJson = new JSONObject(jsonReviewsResponse);
+        JSONArray reviewsArray = reviewsJson.getJSONArray(OWN_RESULTS);
+        Review[] parsedReviewsData = new Review[reviewsArray.length()];
+        for (int i = 0; i < reviewsArray.length(); i++) {
+            JSONObject review = reviewsArray.getJSONObject(i);
+            String id = review.getString("id");
+            String content = review.getString("content");
+            String author = review.getString("author");
+
+            Review reviewObject = new Review(id,author,content);
+            parsedReviewsData[i] = reviewObject;
+        }
+        return  parsedReviewsData;
+    }
+
     public static MovieDetail getSingleMovieDetailsFromJson(String jsonMoviesResponse) throws JSONException {
         JSONObject movieJson = new JSONObject(jsonMoviesResponse);
         MovieDetail movieDetails = new MovieDetail();
@@ -202,4 +219,25 @@ public final class NetworkUtils {
         return url;
 
     }
+
+    public static URL buildReviewsUri(Integer movieId) {
+        Uri builtUri = Uri.parse(BASE_URL).buildUpon()
+                .appendPath(String.valueOf(movieId))
+                .appendPath("reviews")
+                .appendQueryParameter(API_KEY_PARAM, API_KEY).build();
+
+        URL url = null;
+
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        Log.v(TAG, "Built URI " + url);
+
+        return url;
+    }
+
+
 }

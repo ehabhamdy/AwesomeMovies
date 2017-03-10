@@ -8,7 +8,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.ehab.awesomemovies.DetailsActivity">
+        tools:context="com.ehab.awesomemovies.ui.activities.DetailsActivity">
 
 
         <RelativeLayout
@@ -143,6 +143,7 @@
 
 
             <LinearLayout
+                android:id="@+id/trailers_linear_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/overview_linear_layout"
@@ -166,6 +167,36 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/trailer_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/trailers_linear_layout"
+                android:orientation="vertical"
+                android:paddingBottom="20dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="15dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reviews_label_text"
+                    android:textColor="#000"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="#000"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/reviews_recyclerview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 

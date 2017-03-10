@@ -9,4 +9,5 @@
     <string name="bdImage_description">Cover Image</string>
     <string name="add_to_favorites_button_description">Add to favorites</string>
     <string name="trailers_label_text">Trailers</string>
+    <string name="reviews_label_text">Reviews</string>
 </resources>
