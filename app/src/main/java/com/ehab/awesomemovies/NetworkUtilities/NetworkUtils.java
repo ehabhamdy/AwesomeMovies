@@ -8,6 +8,7 @@ import android.util.Log;
 import com.ehab.awesomemovies.BuildConfig;
 import com.ehab.awesomemovies.MainActivity;
 import com.ehab.awesomemovies.model.MovieDetail;
+import com.ehab.awesomemovies.model.Trailer;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,6 +40,7 @@ public final class NetworkUtils {
     final static String API_KEY_PARAM = "api_key";
 
     private static final String OWN_RESULTS = "results";
+    private static final String OWN_YOUTUBE = "youtube";
 
 
     public static URL buildUrl( /*String locationQ */int loader_id) {
@@ -51,7 +53,7 @@ public final class NetworkUtils {
             builtUri = Uri.parse(BASE_URL).buildUpon()
                     .appendPath("top_rated")
                     .appendQueryParameter(API_KEY_PARAM, API_KEY).build();
-        }else{
+        } else{
             builtUri = Uri.parse(BASE_URL).buildUpon()
                     .appendPath(String.valueOf(loader_id))
                     .appendQueryParameter(API_KEY_PARAM, API_KEY).build();
@@ -148,6 +150,24 @@ public final class NetworkUtils {
         return parsedMovieData;
     }
 
+    public static Trailer[] getTrailersDetailsFromJson(Context context, String jsonTrailersResponse) throws JSONException{
+        JSONObject trailersJson = new JSONObject(jsonTrailersResponse);
+        JSONArray trailersArray = trailersJson.getJSONArray(OWN_YOUTUBE);
+        Trailer[] parsedTrailerData = new Trailer[trailersArray.length()];
+        for (int i = 0; i < trailersArray.length(); i++) {
+            JSONObject trailer = trailersArray.getJSONObject(i);
+            String name = trailer.getString("name");
+            String size = trailer.getString("size");
+            String source = trailer.getString("source");
+            String type = trailer.getString("type");
+
+            Trailer trailerObject = new Trailer(name, size, source, type);
+            parsedTrailerData[i] = trailerObject;
+        }
+
+        return parsedTrailerData;
+    }
+
     public static MovieDetail getSingleMovieDetailsFromJson(String jsonMoviesResponse) throws JSONException {
         JSONObject movieJson = new JSONObject(jsonMoviesResponse);
         MovieDetail movieDetails = new MovieDetail();
@@ -161,5 +181,25 @@ public final class NetworkUtils {
 
 
         return movieDetails;
+    }
+
+    public static URL buildTrailersUri(int movieId) {
+        Uri builtUri = Uri.parse(BASE_URL).buildUpon()
+                .appendPath(String.valueOf(movieId))
+                .appendPath("trailers")
+                .appendQueryParameter(API_KEY_PARAM, API_KEY).build();
+
+        URL url = null;
+
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        Log.v(TAG, "Built URI " + url);
+
+        return url;
+
     }
 }

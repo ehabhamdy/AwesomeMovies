@@ -1,8 +1,11 @@
 package com.ehab.awesomemovies;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -10,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ehab.awesomemovies.model.MovieDetail;
+import com.ehab.awesomemovies.model.Trailer;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -18,7 +22,7 @@ import butterknife.ButterKnife;
 import static com.ehab.awesomemovies.MainActivity.EXTRA_MOVIE_DETAILS;
 
 
-public class DetailsActivity extends AppCompatActivity {
+public class DetailsActivity extends AppCompatActivity implements TrailersAdapter.ListItemClickListener{
 
     @BindView(R.id.movie_title)
     TextView title;
@@ -39,7 +43,8 @@ public class DetailsActivity extends AppCompatActivity {
     @BindView(R.id.overview_textview)
     TextView overviewTextView;
 
-
+    private TrailersAdapter mAdapter;
+    private RecyclerView mTrailersRecyclerview;
 
 
     @Override
@@ -52,7 +57,7 @@ public class DetailsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         final int movieId = intent.getIntExtra(EXTRA_MOVIE_DETAILS, 2);
 
-        title.setText(String.valueOf(movieId));
+        //title.setText(String.valueOf(movieId));
 
         new FetchDetailsTask() {
             @Override
@@ -80,6 +85,23 @@ public class DetailsActivity extends AppCompatActivity {
                 }
             }
         }.execute(movieId);
+
+        mTrailersRecyclerview = (RecyclerView) findViewById(R.id.trailer_recyclerview);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        mTrailersRecyclerview.setLayoutManager(gridLayoutManager);
+        mTrailersRecyclerview.setHasFixedSize(true);
+
+        mAdapter = new TrailersAdapter(this);
+        mTrailersRecyclerview.setAdapter(mAdapter);
+
+
+
+        new FetchTralersTask(this){
+            @Override
+            protected void onPostExecute(Trailer[] trailers) {
+                mAdapter.setNewData(trailers);
+            }
+        }.execute(movieId);
     }
 
     private void showMovieDataView() {
@@ -94,5 +116,10 @@ public class DetailsActivity extends AppCompatActivity {
         detailsInfo.setVisibility(View.INVISIBLE);
         /* Then, show the error */
         mErrorMessageDisplay.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onListItemClick(Trailer trailer) {
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v="+trailer.getSource())));
     }
 }

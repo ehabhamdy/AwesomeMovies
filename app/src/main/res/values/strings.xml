@@ -8,4 +8,5 @@
     <string name="movie_poster_description">Movie Poster</string>
     <string name="bdImage_description">Cover Image</string>
     <string name="add_to_favorites_button_description">Add to favorites</string>
+    <string name="trailers_label_text">Trailers</string>
 </resources>
