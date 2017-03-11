@@ -10,4 +10,7 @@
     <string name="add_to_favorites_button_description">Add to favorites</string>
     <string name="trailers_label_text">Trailers</string>
     <string name="reviews_label_text">Reviews</string>
+    <string name="popular_tab_label">Popular</string>
+    <string name="toprated_tab_label">Top Rated</string>
+    <string name="favorites_tab_label">Favorites</string>
 </resources>

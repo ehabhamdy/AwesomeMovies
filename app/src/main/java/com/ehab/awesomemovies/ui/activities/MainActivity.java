@@ -87,11 +87,11 @@ public class MainActivity extends AppCompatActivity implements MoviesOnClickList
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Popular Movies";
+                    return getResources().getString(R.string.popular_tab_label);
                 case 1:
-                    return "Top Rated";
+                    return getResources().getString(R.string.toprated_tab_label);
                 case 2:
-                    return "favorites";
+                    return getResources().getString(R.string.favorites_tab_label);
             }
             return null;
         }
