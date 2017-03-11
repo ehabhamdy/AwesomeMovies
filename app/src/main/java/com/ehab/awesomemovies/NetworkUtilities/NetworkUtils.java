@@ -146,8 +146,6 @@ public final class NetworkUtils {
             detail.setId(id);
             detail.setTitle(movieTitle);
             parsedMovieData[i] = detail;
-            Log.d("Ehaaaab", detail.getPosterPath());
-
         }
         return parsedMovieData;
     }

@@ -60,14 +60,27 @@
                         android:layout_height="wrap_content"
                         android:paddingTop="35dp">
 
-                        <ImageView
+                        <!--<ImageView
                             android:id="@+id/toggle_favorite"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
                             android:contentDescription="@string/add_to_favorites_button_description"
-                            android:src="@drawable/ic_action_heart" />
+                            android:src="@drawable/ic_action_heart" />-->
+
+                        <com.varunest.sparkbutton.SparkButton
+                            android:id="@+id/toggle_favorite"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            app:sparkbutton_activeImage="@drawable/ic_star_on"
+                            app:sparkbutton_iconSize="40dp"
+                            app:sparkbutton_inActiveImage="@drawable/ic_star_off"
+                            app:sparkbutton_primaryColor="@color/spark"
+                            app:sparkbutton_secondaryColor="@color/spark" />
+
                     </RelativeLayout>
 
                     <android.support.v7.widget.CardView
@@ -86,14 +99,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="10dp"
-                                tools:text="@string/title_experimental_text"
-                                android:textSize="30sp" />
+                                android:textSize="30sp"
+                                tools:text="@string/title_experimental_text" />
 
                             <TextView
                                 android:id="@+id/date_textview"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                tools:text="@string/date_expermintal_text"/>
+                                tools:text="@string/date_expermintal_text" />
 
                             <TextView
                                 android:id="@+id/rating_textview"
@@ -137,10 +150,9 @@
                     android:id="@+id/overview_textview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    tools:text="asdf asdf sdj fdsjah jfsdhja fjhdas jhkdshfaj hdajs hjd ashfj asjhjfa sdjh"/>
+                    tools:text="asdf asdf sdj fdsjah jfsdhja fjhdas jhkdshfaj hdajs hjd ashfj asjhjfa sdjh" />
 
             </LinearLayout>
-
 
 
             <LinearLayout
@@ -152,6 +164,7 @@
                 android:paddingBottom="20dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="15dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -164,7 +177,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginBottom="5dp"
-                    android:background="#000"/>
+                    android:background="#000" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/trailer_recyclerview"
@@ -182,6 +195,7 @@
                 android:paddingBottom="20dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="15dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -194,7 +208,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginBottom="5dp"
-                    android:background="#000"/>
+                    android:background="#000" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/reviews_recyclerview"

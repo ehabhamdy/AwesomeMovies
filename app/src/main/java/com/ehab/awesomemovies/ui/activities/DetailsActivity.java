@@ -17,9 +17,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ehab.awesomemovies.tasks.FetchDetailsTask;
-import com.ehab.awesomemovies.tasks.FetchReviewsTask;
-import com.ehab.awesomemovies.tasks.FetchTralersTask;
 import com.ehab.awesomemovies.R;
 import com.ehab.awesomemovies.data.FavoritesProvider;
 import com.ehab.awesomemovies.data.MoviesColumns;
@@ -28,7 +25,11 @@ import com.ehab.awesomemovies.data.TrailersAdapter;
 import com.ehab.awesomemovies.model.MovieDetail;
 import com.ehab.awesomemovies.model.Review;
 import com.ehab.awesomemovies.model.Trailer;
+import com.ehab.awesomemovies.tasks.FetchDetailsTask;
+import com.ehab.awesomemovies.tasks.FetchReviewsTask;
+import com.ehab.awesomemovies.tasks.FetchTralersTask;
 import com.squareup.picasso.Picasso;
+import com.varunest.sparkbutton.SparkButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,7 +64,7 @@ public class DetailsActivity extends AppCompatActivity implements TrailersAdapte
     private ReviewsAdapter mReviewsAdapter;
     private RecyclerView mReviewsRecyclerview;
 
-    private ImageView mMakeFavoriteImageView;
+    private SparkButton mMakeFavoriteImageView;
 
     private boolean isFavorite = false;
 
@@ -77,8 +78,9 @@ public class DetailsActivity extends AppCompatActivity implements TrailersAdapte
         Intent intent = getIntent();
         final int movieId = intent.getIntExtra(MainActivity.EXTRA_MOVIE_DETAILS, 2);
 
-        mMakeFavoriteImageView = (ImageView) findViewById(R.id.toggle_favorite);
+        mMakeFavoriteImageView = (SparkButton) findViewById(R.id.toggle_favorite);
 
+        // Check if the movies is in the favorites library or not
         new AsyncTask<String, Void, Boolean>(){
             @Override
             protected Boolean doInBackground(String... strings) {
@@ -88,12 +90,15 @@ public class DetailsActivity extends AppCompatActivity implements TrailersAdapte
                     return true;
                 else
                     return false;
-
             }
 
             @Override
             protected void onPostExecute(Boolean aBoolean) {
                 isFavorite = aBoolean;
+                if(aBoolean)
+                    mMakeFavoriteImageView.setChecked(true);
+                else
+                    mMakeFavoriteImageView.setChecked(false);
             }
         }.execute();
 
@@ -135,10 +140,17 @@ public class DetailsActivity extends AppCompatActivity implements TrailersAdapte
                     getContentResolver().insert(FavoritesProvider.Movies.CONTENT_URI, cv);
                     Toast.makeText(DetailsActivity.this, "Movie Added To Favorites", Toast.LENGTH_SHORT).show();
                     isFavorite = true;
+                    mMakeFavoriteImageView.setChecked(true);
+                    mMakeFavoriteImageView.playAnimation();
+
+
                 }else{
                     getContentResolver().delete(FavoritesProvider.Movies.CONTENT_URI, "movie_id = "+ movieId, null );
                     Toast.makeText(DetailsActivity.this, "Movie Removed From Favorites", Toast.LENGTH_SHORT).show();
                     isFavorite = false;
+                    mMakeFavoriteImageView.setChecked(false);
+                    mMakeFavoriteImageView.playAnimation();
+
                 }
             }
         });
@@ -180,6 +192,7 @@ public class DetailsActivity extends AppCompatActivity implements TrailersAdapte
         mErrorMessageDisplay.setVisibility(View.INVISIBLE);
         /* Then, make sure the weather data is visible */
         detailsInfo.setVisibility(View.VISIBLE);
+        mMakeFavoriteImageView.playAnimation();
     }
 
     private void showErrorMessage() {

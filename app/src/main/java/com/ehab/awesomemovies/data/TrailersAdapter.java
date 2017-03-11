@@ -2,7 +2,6 @@ package com.ehab.awesomemovies.data;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,7 +65,6 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.Traile
         }
 
         public void bind(Trailer trailer) {
-            Log.d("asdfsdafdsfsdf", "http://img.youtube.com/vi/"+trailer.getSource()+"/mqdefault.jpg");
             Picasso.with(mContext).load("http://img.youtube.com/vi/"+trailer.getSource()+"/mqdefault.jpg").into(trailerImageView);
         }
 
