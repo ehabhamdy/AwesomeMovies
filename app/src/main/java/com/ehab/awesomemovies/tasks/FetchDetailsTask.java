@@ -1,4 +1,4 @@
-package com.ehab.awesomemovies;
+package com.ehab.awesomemovies.tasks;
 
 import android.os.AsyncTask;
 

@@ -17,9 +17,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ehab.awesomemovies.FetchDetailsTask;
-import com.ehab.awesomemovies.FetchReviewsTask;
-import com.ehab.awesomemovies.FetchTralersTask;
+import com.ehab.awesomemovies.tasks.FetchDetailsTask;
+import com.ehab.awesomemovies.tasks.FetchReviewsTask;
+import com.ehab.awesomemovies.tasks.FetchTralersTask;
 import com.ehab.awesomemovies.R;
 import com.ehab.awesomemovies.data.FavoritesProvider;
 import com.ehab.awesomemovies.data.MoviesColumns;
