@@ -18,7 +18,7 @@
             android:visibility="invisible">
 
             <ImageView
-                android:id="@+id/backdrop_imageview"
+                android:id= "@+id/backdrop_imageview"
                 android:layout_width="match_parent"
                 android:layout_height="140dp"
                 android:contentDescription="@string/bdImage_description"
