@@ -13,6 +13,7 @@ Your can Maintain a list of favorited movies and view movie details, watch trail
 3. [Butterknife](jakewharton.github.io/butterknife/ "Butter Knife").
 4. [OkHttp](square.github.io/okhttp/ "OkHttp - Square Open Source").
 4. [Schematic](https://github.com/SimonVT/schematic "Schematic - Content Providers").
+5. [SparkButton](https://github.com/varunest/SparkButton "SparkButton").
 
 ## Note
 To test the app please complete the TODO which have instruction to add your own API key
