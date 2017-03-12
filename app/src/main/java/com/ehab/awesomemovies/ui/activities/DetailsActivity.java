@@ -138,7 +138,7 @@ public class DetailsActivity extends AppCompatActivity implements TrailersAdapte
                     cv.put(MoviesColumns.POSTER_PATH, mMDetails.getPosterPath());
                     cv.put(MoviesColumns.TITLE, mMDetails.getTitle());
                     getContentResolver().insert(FavoritesProvider.Movies.CONTENT_URI, cv);
-                    Toast.makeText(DetailsActivity.this, "Movie Added To Favorites", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailsActivity.this, mMDetails.getTitle()+" Added To Favorites", Toast.LENGTH_SHORT).show();
                     isFavorite = true;
                     mMakeFavoriteImageView.setChecked(true);
                     mMakeFavoriteImageView.playAnimation();
@@ -146,7 +146,7 @@ public class DetailsActivity extends AppCompatActivity implements TrailersAdapte
 
                 }else{
                     getContentResolver().delete(FavoritesProvider.Movies.CONTENT_URI, "movie_id = "+ movieId, null );
-                    Toast.makeText(DetailsActivity.this, "Movie Removed From Favorites", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailsActivity.this, mMDetails.getTitle()+" Removed From Favorites", Toast.LENGTH_SHORT).show();
                     isFavorite = false;
                     mMakeFavoriteImageView.setChecked(false);
                     mMakeFavoriteImageView.playAnimation();
