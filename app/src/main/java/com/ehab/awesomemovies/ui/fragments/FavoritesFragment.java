@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 
 import com.ehab.awesomemovies.R;
 import com.ehab.awesomemovies.data.FavoritesAdapter;
-import com.ehab.awesomemovies.data.FavoritesProvider;
+import com.ehab.awesomemovies.data.MoviesContract;
 
 /**
  * Created by ehabhamdy on 3/10/17.
@@ -64,7 +64,7 @@ public class FavoritesFragment extends Fragment  implements LoaderManager.Loader
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return  new CursorLoader(getActivity(), FavoritesProvider.Movies.CONTENT_URI, null, null, null, null);
+        return  new CursorLoader(getActivity(), MoviesContract.FavoritesEntry.CONTENT_URI, null, null, null, null);
 
     }
 

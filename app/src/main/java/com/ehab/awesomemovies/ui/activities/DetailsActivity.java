@@ -18,8 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ehab.awesomemovies.R;
-import com.ehab.awesomemovies.data.FavoritesProvider;
-import com.ehab.awesomemovies.data.MoviesColumns;
+import com.ehab.awesomemovies.data.MoviesContract;
 import com.ehab.awesomemovies.data.ReviewsAdapter;
 import com.ehab.awesomemovies.data.TrailersAdapter;
 import com.ehab.awesomemovies.model.MovieDetail;
@@ -84,7 +83,7 @@ public class DetailsActivity extends AppCompatActivity implements TrailersAdapte
         new AsyncTask<String, Void, Boolean>(){
             @Override
             protected Boolean doInBackground(String... strings) {
-                Cursor c = getContentResolver().query(FavoritesProvider.Movies.withId(movieId),null,null,null,null);
+                Cursor c = getContentResolver().query(MoviesContract.FavoritesEntry.buildMovieUriWithID(String.valueOf(movieId)),null,null,null,null);
                 int count = c.getCount();
                 if(c.moveToFirst() || count > 0)
                     return true;
@@ -102,6 +101,7 @@ public class DetailsActivity extends AppCompatActivity implements TrailersAdapte
             }
         }.execute();
 
+        // Binding movie details into ui
         new FetchDetailsTask() {
             @Override
             protected void onPreExecute() {
@@ -134,10 +134,10 @@ public class DetailsActivity extends AppCompatActivity implements TrailersAdapte
             public void onClick(View view) {
                 if(!isFavorite) {
                     ContentValues cv = new ContentValues();
-                    cv.put(MoviesColumns.MOVIE_ID, movieId);
-                    cv.put(MoviesColumns.POSTER_PATH, mMDetails.getPosterPath());
-                    cv.put(MoviesColumns.TITLE, mMDetails.getTitle());
-                    getContentResolver().insert(FavoritesProvider.Movies.CONTENT_URI, cv);
+                    cv.put(MoviesContract.FavoritesEntry.COLUMN_MOVIE_ID, movieId);
+                    cv.put(MoviesContract.FavoritesEntry.COLUMN_POSTER_PATH, mMDetails.getPosterPath());
+                    cv.put(MoviesContract.FavoritesEntry.COLUMN_TITLE, mMDetails.getTitle());
+                    getContentResolver().insert(MoviesContract.FavoritesEntry.CONTENT_URI, cv);
                     Toast.makeText(DetailsActivity.this, mMDetails.getTitle()+" Added To Favorites", Toast.LENGTH_SHORT).show();
                     isFavorite = true;
                     mMakeFavoriteImageView.setChecked(true);
@@ -145,7 +145,7 @@ public class DetailsActivity extends AppCompatActivity implements TrailersAdapte
 
 
                 }else{
-                    getContentResolver().delete(FavoritesProvider.Movies.CONTENT_URI, "movie_id = "+ movieId, null );
+                    getContentResolver().delete(MoviesContract.FavoritesEntry.CONTENT_URI, "movie_id = "+ movieId, null );
                     Toast.makeText(DetailsActivity.this, mMDetails.getTitle()+" Removed From Favorites", Toast.LENGTH_SHORT).show();
                     isFavorite = false;
                     mMakeFavoriteImageView.setChecked(false);
@@ -155,6 +155,7 @@ public class DetailsActivity extends AppCompatActivity implements TrailersAdapte
             }
         });
 
+        // Trailers Recyclerview setup
         mTrailersRecyclerview = (RecyclerView) findViewById(R.id.trailer_recyclerview);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         mTrailersRecyclerview.setLayoutManager(gridLayoutManager);
@@ -163,6 +164,7 @@ public class DetailsActivity extends AppCompatActivity implements TrailersAdapte
         mTrailersAdapter = new TrailersAdapter(this);
         mTrailersRecyclerview.setAdapter(mTrailersAdapter);
 
+        // Reviews Recyclerview setup
         mReviewsRecyclerview = (RecyclerView) findViewById(R.id.reviews_recyclerview);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mReviewsRecyclerview.setLayoutManager(linearLayoutManager);

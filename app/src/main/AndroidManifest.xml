@@ -24,7 +24,7 @@
             android:name=".ui.activities.DetailsActivity"
             android:parentActivityName=".ui.activities.MainActivity"></activity>
         <provider
-            android:name=".data.generated.FavoritesProvider"
+            android:name=".data.FavoritesProvider"
             android:authorities="com.ehab.awesomemovies.data.FavoritesProvider"
             android:exported="false" />
     </application>
