@@ -10,8 +10,6 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import static com.ehab.awesomemovies.data.MoviesContract.FavoritesEntry.TABLE_NAME;
-
 /**
  * Created by ehabhamdy on 3/10/17.
  */
@@ -46,7 +44,7 @@ public class FavoritesProvider extends ContentProvider {
         switch (sUriMatcher.match(uri)) {
             case CODE_FAVORITE:
                 cursor = mOpenHelper.getReadableDatabase().query(
-                        TABLE_NAME,
+                        MoviesContract.FavoritesEntry.TABLE_NAME,
                         projection,
                         selection,
                         selectionArgs,
@@ -60,7 +58,7 @@ public class FavoritesProvider extends ContentProvider {
                 String[] selectionArguments = new String[]{uri.getLastPathSegment()};
 
                 cursor = mOpenHelper.getReadableDatabase().query(
-                        TABLE_NAME,
+                        MoviesContract.FavoritesEntry.TABLE_NAME,
                         projection,
                         MoviesContract.FavoritesEntry.COLUMN_MOVIE_ID + " = ? ",
                         selectionArguments,
@@ -91,7 +89,7 @@ public class FavoritesProvider extends ContentProvider {
         Uri returnUri = null;
         switch (sUriMatcher.match(uri)) {
             case CODE_FAVORITE:
-                long id = db.insert(TABLE_NAME, null, contentValues);
+                long id = db.insert(MoviesContract.FavoritesEntry.TABLE_NAME, null, contentValues);
                 if(id > 0){
                     returnUri = ContentUris.withAppendedId(MoviesContract.FavoritesEntry.CONTENT_URI, id);
                 }else{
@@ -122,7 +120,7 @@ public class FavoritesProvider extends ContentProvider {
                 // Get the task ID from the URI path
                 String id = uri.getPathSegments().get(1);
                 // Use selections/selectionArgs to filter for this ID
-                moviesDeleted = db.delete(TABLE_NAME, "_id=?", new String[]{id});
+                moviesDeleted = db.delete(MoviesContract.FavoritesEntry.TABLE_NAME, "_id=?", new String[]{id});
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
