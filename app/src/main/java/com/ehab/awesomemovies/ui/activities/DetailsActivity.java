@@ -33,6 +33,8 @@ import com.varunest.sparkbutton.SparkButton;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.ehab.awesomemovies.data.MoviesContract.FavoritesEntry.COLUMN_MOVIE_ID;
+
 
 public class DetailsActivity extends AppCompatActivity implements TrailersAdapter.ListItemClickListener {
 
@@ -134,7 +136,7 @@ public class DetailsActivity extends AppCompatActivity implements TrailersAdapte
             public void onClick(View view) {
                 if(!isFavorite) {
                     ContentValues cv = new ContentValues();
-                    cv.put(MoviesContract.FavoritesEntry.COLUMN_MOVIE_ID, movieId);
+                    cv.put(COLUMN_MOVIE_ID, movieId);
                     cv.put(MoviesContract.FavoritesEntry.COLUMN_POSTER_PATH, mMDetails.getPosterPath());
                     cv.put(MoviesContract.FavoritesEntry.COLUMN_TITLE, mMDetails.getTitle());
                     getContentResolver().insert(MoviesContract.FavoritesEntry.CONTENT_URI, cv);
@@ -145,7 +147,7 @@ public class DetailsActivity extends AppCompatActivity implements TrailersAdapte
 
 
                 }else{
-                    getContentResolver().delete(MoviesContract.FavoritesEntry.CONTENT_URI, "movie_id = "+ movieId, null );
+                    getContentResolver().delete(MoviesContract.FavoritesEntry.buildMovieUriWithID(String.valueOf(movieId)), COLUMN_MOVIE_ID + "= "+ movieId, null );
                     Toast.makeText(DetailsActivity.this, mMDetails.getTitle()+" Removed From Favorites", Toast.LENGTH_SHORT).show();
                     isFavorite = false;
                     mMakeFavoriteImageView.setChecked(false);

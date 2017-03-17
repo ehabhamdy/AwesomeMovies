@@ -10,6 +10,8 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import static com.ehab.awesomemovies.data.MoviesContract.FavoritesEntry.COLUMN_MOVIE_ID;
+
 /**
  * Created by ehabhamdy on 3/10/17.
  */
@@ -60,7 +62,7 @@ public class FavoritesProvider extends ContentProvider {
                 cursor = mOpenHelper.getReadableDatabase().query(
                         MoviesContract.FavoritesEntry.TABLE_NAME,
                         projection,
-                        MoviesContract.FavoritesEntry.COLUMN_MOVIE_ID + " = ? ",
+                        COLUMN_MOVIE_ID + " = ? ",
                         selectionArguments,
                         null,
                         null,
@@ -118,9 +120,9 @@ public class FavoritesProvider extends ContentProvider {
             // Handle the single item case, recognized by the ID included in the URI path
             case CODE_FAVORITE_WITH_ID:
                 // Get the task ID from the URI path
-                String id = uri.getPathSegments().get(1);
+                String id = uri.getLastPathSegment();
                 // Use selections/selectionArgs to filter for this ID
-                moviesDeleted = db.delete(MoviesContract.FavoritesEntry.TABLE_NAME, "_id=?", new String[]{id});
+                moviesDeleted = db.delete(MoviesContract.FavoritesEntry.TABLE_NAME, COLUMN_MOVIE_ID+"=?", new String[]{id});
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
