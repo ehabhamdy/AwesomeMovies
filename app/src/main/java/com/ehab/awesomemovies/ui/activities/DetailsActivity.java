@@ -6,10 +6,12 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -73,8 +75,14 @@ public class DetailsActivity extends AppCompatActivity implements TrailersAdapte
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_details);
+        setContentView(R.layout.activity_details_v3);
         ButterKnife.bind(this);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
+        setSupportActionBar(toolbar);
+
+
+        final CollapsingToolbarLayout ctbl = ((CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout));
 
         Intent intent = getIntent();
         final int movieId = intent.getIntExtra(MainActivity.EXTRA_MOVIE_DETAILS, 2);
@@ -120,6 +128,7 @@ public class DetailsActivity extends AppCompatActivity implements TrailersAdapte
                     Picasso.with(getApplicationContext()).load("http://image.tmdb.org/t/p/w342/"+movieDetail.getPosterPath()).into(posterImageView);
 
                     title.setText(movieDetail.getTitle());
+                    ctbl.setTitle(movieDetail.getTitle());
                     dateTextView.setText(movieDetail.getReleaseDate());
                     ratingTextView.setText(movieDetail.getVoteAverage().toString() + " / 10");
                     overviewTextView.setText(movieDetail.getOverview());
