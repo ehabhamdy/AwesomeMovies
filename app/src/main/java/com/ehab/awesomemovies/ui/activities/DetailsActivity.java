@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.GridLayoutManager;
@@ -88,6 +89,7 @@ public class DetailsActivity extends AppCompatActivity implements TrailersAdapte
 
 
         final CollapsingToolbarLayout ctbl = ((CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout));
+        final CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
 
         final Intent intent = getIntent();
         final int movieId = intent.getIntExtra(MainActivity.EXTRA_MOVIE_DETAILS, 2);
@@ -159,7 +161,7 @@ public class DetailsActivity extends AppCompatActivity implements TrailersAdapte
                     dateTextView.setText(movieDetail.getReleaseDate());
                     ratingTextView.setText(movieDetail.getVoteAverage().toString() + " / 10");
                     overviewTextView.setText(movieDetail.getOverview());
-
+                    coordinatorLayout.setVisibility(View.VISIBLE);
                 }
                 else{
                     showErrorMessage();
