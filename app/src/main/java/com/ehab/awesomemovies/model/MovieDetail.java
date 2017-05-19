@@ -1,5 +1,6 @@
 package com.ehab.awesomemovies.model;
 
+import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -25,6 +26,15 @@ public class MovieDetail implements Parcelable {
     private Integer voteCount;
     private Boolean video;
     private Double voteAverage;
+    private Bitmap bitmap;
+
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
+
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
+    }
 
     public  MovieDetail(){
     }

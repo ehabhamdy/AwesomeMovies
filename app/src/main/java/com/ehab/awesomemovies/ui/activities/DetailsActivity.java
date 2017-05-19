@@ -3,11 +3,14 @@ package com.ehab.awesomemovies.ui.activities;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,6 +34,8 @@ import com.ehab.awesomemovies.tasks.FetchReviewsTask;
 import com.ehab.awesomemovies.tasks.FetchTralersTask;
 import com.squareup.picasso.Picasso;
 import com.varunest.sparkbutton.SparkButton;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -78,13 +83,13 @@ public class DetailsActivity extends AppCompatActivity implements TrailersAdapte
         setContentView(R.layout.activity_details_v3);
         ButterKnife.bind(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
 
 
         final CollapsingToolbarLayout ctbl = ((CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout));
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         final int movieId = intent.getIntExtra(MainActivity.EXTRA_MOVIE_DETAILS, 2);
 
         mMakeFavoriteImageView = (SparkButton) findViewById(R.id.toggle_favorite);
@@ -126,6 +131,28 @@ public class DetailsActivity extends AppCompatActivity implements TrailersAdapte
                     mMDetails = movieDetail;
                     Picasso.with(getApplicationContext()).load("http://image.tmdb.org/t/p/w500/"+movieDetail.getBackdropPath()).into(bdImageView);
                     Picasso.with(getApplicationContext()).load("http://image.tmdb.org/t/p/w342/"+movieDetail.getPosterPath()).into(posterImageView);
+
+                    String imageUri = "http://image.tmdb.org/t/p/w500/"+movieDetail.getBackdropPath();
+
+                    //InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                    Bitmap bitmap = movieDetail.getBitmap();
+                    Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+                        @Override
+                        public void onGenerated(Palette palette) {
+                            HashMap map = processPalette(palette);
+                            Palette.Swatch vibrant= (Palette.Swatch) map.get("Vibrant");
+                            Palette.Swatch darkVibrant= (Palette.Swatch) map.get("DarkVibrant");
+                            if(vibrant != null && darkVibrant != null) {
+                                title.setTextColor(darkVibrant.getRgb());
+                                if (Build.VERSION.SDK_INT >= 21) {
+                                    getWindow().setStatusBarColor(darkVibrant.getRgb());
+                                    ctbl.setContentScrimColor(vibrant.getRgb());
+                                }
+                            }
+
+                        }
+                    });
+
 
                     title.setText(movieDetail.getTitle());
                     ctbl.setTitle(movieDetail.getTitle());
@@ -198,6 +225,17 @@ public class DetailsActivity extends AppCompatActivity implements TrailersAdapte
                 mReviewsAdapter.setNewData(reviews);
             }
         }.execute(movieId);
+    }
+
+    private HashMap<String, Palette.Swatch> processPalette(Palette palette) {
+        HashMap<String, Palette.Swatch> map = new HashMap<>();
+
+        map.put("Vibrant", palette.getVibrantSwatch());
+        map.put("DarkVibrant", palette.getDarkVibrantSwatch());
+        map.put("LightMuted", palette.getLightMutedSwatch());
+        map.put("DarkMuted", palette.getDarkMutedSwatch());
+
+        return map;
     }
 
     private void showMovieDataView() {
