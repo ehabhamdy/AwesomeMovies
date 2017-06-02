@@ -1,6 +1,5 @@
 package com.ehab.awesomemovies.ui.activities;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -52,11 +51,11 @@ public class MainActivity extends AppCompatActivity implements MoviesOnClickList
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onListItemClick(MovieDetail movie) {
-        Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle();
-
+        //Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle();
+        //Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(this, sharedView, ViewCompat.getTransitionName(sharedView)).toBundle();
         Intent intent = new Intent(this, DetailsActivity.class);
         intent.putExtra(EXTRA_MOVIE_DETAILS, movie.getId());
-        startActivity(intent, bundle);
+        startActivity(intent/*, bundle*/);
     }
 
 

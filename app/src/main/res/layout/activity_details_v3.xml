@@ -97,6 +97,7 @@
 
                     <ImageView
                         android:id="@+id/poster_imageview"
+                        android:transitionName="@string/transition_photo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/movie_poster_description" />

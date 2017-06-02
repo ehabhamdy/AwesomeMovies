@@ -13,4 +13,5 @@
     <string name="popular_tab_label">Popular</string>
     <string name="toprated_tab_label">Top Rated</string>
     <string name="favorites_tab_label">Favorites</string>
+    <string name="transition_photo">transition photo</string>
 </resources>

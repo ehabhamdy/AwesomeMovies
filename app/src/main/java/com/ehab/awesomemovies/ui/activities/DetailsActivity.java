@@ -87,7 +87,6 @@ public class DetailsActivity extends AppCompatActivity implements TrailersAdapte
         final Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
 
-
         final CollapsingToolbarLayout ctbl = ((CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout));
         final CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
 
