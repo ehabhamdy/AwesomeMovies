@@ -1,6 +1,5 @@
-package com.ehab.awesomemovies.ui.activities;
+package com.ehab.awesomemovies.ui.movies;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -10,17 +9,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import com.ehab.awesomemovies.MoviesOnClickListener;
 import com.ehab.awesomemovies.R;
-import com.ehab.awesomemovies.model.MovieDetail;
 import com.ehab.awesomemovies.ui.fragments.FavoritesFragment;
-import com.ehab.awesomemovies.ui.fragments.MoviesFragment;
 
 
-public class MainActivity extends AppCompatActivity implements MoviesOnClickListener {
+public class MainActivity extends AppCompatActivity {
 
 
-    public static final String EXTRA_MOVIE_DETAILS = "movie-details";
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
     private ViewPager mViewPager;
@@ -43,14 +38,6 @@ public class MainActivity extends AppCompatActivity implements MoviesOnClickList
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-    }
-
-
-    @Override
-    public void onListItemClick(MovieDetail movie) {
-        Intent intent = new Intent(this, DetailsActivity.class);
-        intent.putExtra(EXTRA_MOVIE_DETAILS, movie.getId());
-        startActivity(intent);
     }
 
 

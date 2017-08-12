@@ -8,7 +8,7 @@ import android.util.Log;
 
 import com.ehab.awesomemovies.BuildConfig;
 import com.ehab.awesomemovies.model.Review;
-import com.ehab.awesomemovies.ui.activities.MainActivity;
+import com.ehab.awesomemovies.ui.movies.MainActivity;
 import com.ehab.awesomemovies.model.MovieDetail;
 import com.ehab.awesomemovies.model.Trailer;
 

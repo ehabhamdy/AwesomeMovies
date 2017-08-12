@@ -1,4 +1,4 @@
-package com.ehab.awesomemovies.ui.activities;
+package com.ehab.awesomemovies.ui.moviedetail;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -42,6 +42,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.ehab.awesomemovies.data.MoviesContract.FavoritesEntry.COLUMN_MOVIE_ID;
+import static com.ehab.awesomemovies.ui.movies.MoviesFragment.EXTRA_MOVIE_DETAILS;
 
 
 public class DetailsActivity extends AppCompatActivity implements TrailersAdapter.ListItemClickListener {
@@ -92,7 +93,7 @@ public class DetailsActivity extends AppCompatActivity implements TrailersAdapte
         final CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
 
         final Intent intent = getIntent();
-        final int movieId = intent.getIntExtra(MainActivity.EXTRA_MOVIE_DETAILS, 2);
+        final int movieId = intent.getIntExtra(EXTRA_MOVIE_DETAILS, 2);
 
         mMakeFavoriteImageView = (SparkButton) findViewById(R.id.toggle_favorite);
 

@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import com.ehab.awesomemovies.MoviesOnClickListener;
 import com.ehab.awesomemovies.R;
 import com.ehab.awesomemovies.model.MovieDetail;
+import com.ehab.awesomemovies.ui.movies.MoviesFragment;
 import com.squareup.picasso.Picasso;
 
 
@@ -28,9 +29,9 @@ public class PopularMoviesAdapter extends RecyclerView.Adapter<PopularMoviesAdap
     private Context mContext;
 
 
-    public PopularMoviesAdapter(Context context){
+    public PopularMoviesAdapter(Context context, MoviesFragment f){
         mContext = context;
-        mOnClickListener = (MoviesOnClickListener) context;
+        mOnClickListener = (MoviesOnClickListener) f;
     }
 
     @Override

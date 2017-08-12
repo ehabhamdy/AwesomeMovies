@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.activities.MainActivity"
+            android:name=".ui.movies.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:launchMode="singleTop">
             <intent-filter>
@@ -21,8 +21,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activities.DetailsActivity"
-            android:parentActivityName=".ui.activities.MainActivity"></activity>
+            android:name=".ui.moviedetail.DetailsActivity"
+            android:parentActivityName=".ui.movies.MainActivity"></activity>
         <provider
             android:name=".data.FavoritesProvider"
             android:authorities="com.ehab.awesomemovies.data.FavoritesProvider"

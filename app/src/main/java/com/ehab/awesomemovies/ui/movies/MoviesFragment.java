@@ -1,5 +1,6 @@
-package com.ehab.awesomemovies.ui.fragments;
+package com.ehab.awesomemovies.ui.movies;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,25 +15,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.ehab.awesomemovies.MoviesOnClickListener;
 import com.ehab.awesomemovies.NetworkUtilities.NetworkUtils;
 import com.ehab.awesomemovies.data.PopularMoviesAdapter;
 import com.ehab.awesomemovies.R;
 import com.ehab.awesomemovies.model.MovieDetail;
-import com.ehab.awesomemovies.ui.activities.MainActivity;
+import com.ehab.awesomemovies.ui.moviedetail.DetailsActivity;
 import com.google.android.flexbox.AlignItems;
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
 
 import java.net.URL;
+import java.util.List;
 
 /**
  * Created by ehabhamdy on 2/15/17.
  */
 
-public class MoviesFragment extends Fragment implements LoaderManager.LoaderCallbacks<MovieDetail[]>{
+public class MoviesFragment extends Fragment implements MoviesOnClickListener, MoviesContract.View, LoaderManager.LoaderCallbacks<MovieDetail[]>{
 
     public int MOVIES_LOADER_ID = 22;
+    public static final String EXTRA_MOVIE_DETAILS = "movie-details";
+
+    private MoviesContract.UserActionsListener mActionsListener;
 
     private static final String ARG_DATA = "data";
 
@@ -56,6 +63,7 @@ public class MoviesFragment extends Fragment implements LoaderManager.LoaderCall
         // Here I am initializing the loader id based on the purpose of fragment
         // to be able to load different data from the server, thus creating multiple asyncTaskLoaders
         MOVIES_LOADER_ID = getArguments().getInt(ARG_DATA);
+        mActionsListener = new MoviesPresenter(this);
     }
 
     @Nullable
@@ -76,7 +84,7 @@ public class MoviesFragment extends Fragment implements LoaderManager.LoaderCall
         mMoviesRecyclerview.setLayoutManager(gridLayoutManager);
         mMoviesRecyclerview.setHasFixedSize(true);
 
-        mAdapter = new PopularMoviesAdapter(getContext());
+        mAdapter = new PopularMoviesAdapter(getContext(), this);
 
         mMoviesRecyclerview.setAdapter(mAdapter);
 
@@ -167,6 +175,31 @@ public class MoviesFragment extends Fragment implements LoaderManager.LoaderCall
         mErrorMessageDisplay.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public void onListItemClick(MovieDetail movie) {
+        mActionsListener.openMovieDetails(movie);
+    }
 
+    @Override
+    public void setProgressIndicator(boolean active) {
+
+    }
+
+    @Override
+    public void showMovies(List<MovieDetail> notes) {
+
+    }
+
+    @Override
+    public void showAddMovie() {
+
+    }
+
+    @Override
+    public void showMovieDetailUi(MovieDetail movie) {
+        Intent intent = new Intent(getActivity(), DetailsActivity.class);
+        intent.putExtra(EXTRA_MOVIE_DETAILS, movie.getId());
+        startActivity(intent);
+    }
 
 }
