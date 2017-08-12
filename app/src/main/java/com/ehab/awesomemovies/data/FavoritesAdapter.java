@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import com.ehab.awesomemovies.MoviesOnClickListener;
 import com.ehab.awesomemovies.R;
 import com.ehab.awesomemovies.model.MovieDetail;
+import com.ehab.awesomemovies.ui.Favorites.FavoritesFragment;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -27,9 +28,9 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
 
     private Cursor mCursor;
 
-    public FavoritesAdapter(@NonNull Context context) {
+    public FavoritesAdapter(@NonNull Context context, FavoritesFragment f) {
         mContext = context;
-        mClickHandler = (MoviesOnClickListener) context;
+        mClickHandler = (MoviesOnClickListener) f;
     }
     @Override
     public FavoritesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

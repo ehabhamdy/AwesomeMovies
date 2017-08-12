@@ -10,7 +10,7 @@ import java.util.List;
  * Created by ehabhamdy on 8/12/17.
  */
 
-public interface MoviesContract {
+public interface MoviesContractMVP {
     interface View {
 
         void setProgressIndicator(boolean active);

@@ -4,17 +4,15 @@ import android.support.annotation.NonNull;
 
 import com.ehab.awesomemovies.model.MovieDetail;
 
-import java.util.List;
-
 /**
  * Created by ehabhamdy on 8/12/17.
  */
 
-public class MoviesPresenter implements MoviesContract.UserActionsListener {
+public class MoviesPresenter implements MoviesContractMVP.UserActionsListener {
 
-    private final MoviesContract.View mMoviesView;
+    private final MoviesContractMVP.View mMoviesView;
 
-    public MoviesPresenter(MoviesContract.View mNotesView) {
+    public MoviesPresenter(MoviesContractMVP.View mNotesView) {
         this.mMoviesView = mNotesView;
     }
 

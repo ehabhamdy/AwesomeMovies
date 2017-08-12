@@ -1,5 +1,6 @@
-package com.ehab.awesomemovies.ui.fragments;
+package com.ehab.awesomemovies.ui.Favorites;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,15 +14,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ehab.awesomemovies.MoviesOnClickListener;
 import com.ehab.awesomemovies.R;
 import com.ehab.awesomemovies.data.FavoritesAdapter;
 import com.ehab.awesomemovies.data.MoviesContract;
+import com.ehab.awesomemovies.model.MovieDetail;
+import com.ehab.awesomemovies.ui.moviedetail.DetailsActivity;
+import com.ehab.awesomemovies.ui.movies.MoviesContractMVP;
+import com.ehab.awesomemovies.ui.movies.MoviesPresenter;
+
+import java.util.List;
+
+import static com.ehab.awesomemovies.ui.movies.MoviesFragment.EXTRA_MOVIE_DETAILS;
 
 /**
  * Created by ehabhamdy on 3/10/17.
  */
 
-public class FavoritesFragment extends Fragment  implements LoaderManager.LoaderCallbacks<Cursor>{
+public class FavoritesFragment extends Fragment  implements MoviesOnClickListener, LoaderManager.LoaderCallbacks<Cursor>, MoviesContractMVP.View{
     public int MOVIES_LOADER_ID = 4;
 
     private static final String ARG_DATA = "data";
@@ -29,6 +39,7 @@ public class FavoritesFragment extends Fragment  implements LoaderManager.Loader
     private RecyclerView mFavoritesRecyclerview;
     FavoritesAdapter mAdapter;
 
+    private MoviesContractMVP.UserActionsListener mActionsListener;
 
     public static FavoritesFragment newInstance(int type){
         Bundle args = new Bundle();
@@ -39,6 +50,11 @@ public class FavoritesFragment extends Fragment  implements LoaderManager.Loader
         return fragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mActionsListener = new MoviesPresenter(this);
+    }
 
     @Nullable
     @Override
@@ -50,7 +66,7 @@ public class FavoritesFragment extends Fragment  implements LoaderManager.Loader
         mFavoritesRecyclerview.setLayoutManager(gridLayoutManager);
         mFavoritesRecyclerview.setHasFixedSize(true);
 
-        mAdapter = new FavoritesAdapter(getContext());
+        mAdapter = new FavoritesAdapter(getContext(), this);
         mFavoritesRecyclerview.setAdapter(mAdapter);
 
         int loaderId = MOVIES_LOADER_ID;
@@ -79,4 +95,30 @@ public class FavoritesFragment extends Fragment  implements LoaderManager.Loader
     }
 
 
+    @Override
+    public void setProgressIndicator(boolean active) {
+
+    }
+
+    @Override
+    public void showMovies(List<MovieDetail> notes) {
+
+    }
+
+    @Override
+    public void showAddMovie() {
+
+    }
+
+    @Override
+    public void showMovieDetailUi(MovieDetail movie) {
+        Intent intent = new Intent(getActivity(), DetailsActivity.class);
+        intent.putExtra(EXTRA_MOVIE_DETAILS, movie.getId());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onListItemClick(MovieDetail clickedItemIndex) {
+        mActionsListener.openMovieDetails(clickedItemIndex);
+    }
 }

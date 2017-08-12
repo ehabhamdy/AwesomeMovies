@@ -10,7 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.ehab.awesomemovies.R;
-import com.ehab.awesomemovies.ui.fragments.FavoritesFragment;
+import com.ehab.awesomemovies.ui.Favorites.FavoritesFragment;
 
 
 public class MainActivity extends AppCompatActivity {

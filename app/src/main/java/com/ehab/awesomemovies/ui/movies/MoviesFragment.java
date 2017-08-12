@@ -34,12 +34,12 @@ import java.util.List;
  * Created by ehabhamdy on 2/15/17.
  */
 
-public class MoviesFragment extends Fragment implements MoviesOnClickListener, MoviesContract.View, LoaderManager.LoaderCallbacks<MovieDetail[]>{
+public class MoviesFragment extends Fragment implements MoviesOnClickListener, MoviesContractMVP.View, LoaderManager.LoaderCallbacks<MovieDetail[]>{
 
     public int MOVIES_LOADER_ID = 22;
     public static final String EXTRA_MOVIE_DETAILS = "movie-details";
 
-    private MoviesContract.UserActionsListener mActionsListener;
+    private MoviesContractMVP.UserActionsListener mActionsListener;
 
     private static final String ARG_DATA = "data";
 
