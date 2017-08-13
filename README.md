@@ -1,11 +1,15 @@
 # Awesome Movies
 ## Project 2 (Andriod Development, Udacity Nanodegree program)
-
+![Main Screen](/screenshot1.jpg "Main Screen")
+![Main Screen](/screenshot2.jpg "Scrolling")
+![Details Screen](/screenshot3.jpg "Movie Detail")
 
 ## Description
 In this project we build an application to view movies from the MovieDB website throught their API.
 The application will show a list of popular movies fetched directly from the api. The user can get more details on the movie by clicking on the movie poster in the home screen.
 Your can Maintain a list of favorited movies and view movie details, watch trailers and get ratings and reviews.
+
+The Application also updated to take advantage of MVP architecture
 
 ## Dependencies
 1. [Picasso](square.github.io/picasso/ "Picasso - Square Open Source").
